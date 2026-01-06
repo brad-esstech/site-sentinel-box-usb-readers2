@@ -10,18 +10,12 @@ SALT = ""
 GATE_ID = ""
 
 # -----------------------------------------------
-# ingress card reader ESN (serial number)
+# ingress2 card reader ESN (serial number)
 # -----------------------------------------------
 # get by running bundle exec ruby list_readers.rb
 # eg 51C0FCDA11EA6641918A119540064C54
 
-INGRESS_CARD_READER_ESN = ""
-
-# -----------------------------------------------
-# egress card reader ESN (serial number)
-# -----------------------------------------------
-
-EGRESS_CARD_READER_ESN = ""
+INGRESS2_CARD_READER_ESN = ""
 
 # -----------------------------------------------
 # User can only badge in if already badged out?
