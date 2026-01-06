@@ -1,10 +1,10 @@
 #!/usr/bin/env ruby
 
-require_relative 'config.rb' # site config
-require_relative 'common.rb' # common functions
-require_relative 'worker.rb' # sidekiq workers
+require_relative 'config2.rb' # site config
+require_relative 'common2.rb' # common functions
+require_relative 'worker2.rb' # sidekiq workers
 
-@log = Logger.new('/home/ubuntu/site-sentinel-box-usb-readers/log/ingress.txt', 'daily')
+@log = Logger.new('/home/ubuntu/site-sentinel-box-usb-readers2/log/ingress2.txt', 'daily')
 @log.datetime_format = "%d-%m-%Y %H:%M:%S"
 
 @log.info "-------------------------------------------"
@@ -22,7 +22,7 @@ end
 @log.info "Got access list."
 
 # initial connection to reader
-initialise_and_connect_to_ingress_reader
+initialise_and_connect_to_ingress2_reader
 
 @log.info "Sending two beeps to show reader is online..."
 reader_online(PCProxLib, "ingress")
@@ -37,7 +37,7 @@ until time_to_quit == true
   if esn == nil
     @log.info "Error connecting to reader!"
     # reconnect to reader
-    initialise_and_connect_to_ingress_reader
+    initialise_and_connect_to_ingress2_reader
     sleep 0.2
   end
   card = read_card
