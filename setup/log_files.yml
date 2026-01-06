@@ -1,6 +1,6 @@
 files:
-  - /home/ubuntu/site-sentinel-box-usb-readers/log/ingress.txt
-  - /home/ubuntu/site-sentinel-box-usb-readers/log/egress.txt
+  - /home/ubuntu/site-sentinel-box-usb-readers2/log/ingress.txt
+  - /home/ubuntu/site-sentinel-box-usb-readers2/log/egress.txt
 destination:
   host: logs.papertrailapp.com
   port: 31901
