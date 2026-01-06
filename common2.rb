@@ -140,7 +140,7 @@ def initialise_and_connect_to_ingress2_reader
     abort
   end
   
-  @log.info "Reader ##{ingress_reader_id} has an ESN of #{INGRESS_CARD_READER_ESN}!"
+  @log.info "Reader ##{ingress_reader_id} has an ESN of #{INGRESS2_CARD_READER_ESN}!"
   
   set_active_device(ingress2_reader_id)
   @log.info "Connected to reader."
