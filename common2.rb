@@ -122,7 +122,7 @@ def find_device(esn)
   end
 end
 
-def initialise_and_connect_to_ingress_reader
+def initialise_and_connect_to_ingress2_reader
 
   usb_only = set_device_type_to_usb
   if usb_only == false
@@ -132,41 +132,17 @@ def initialise_and_connect_to_ingress_reader
   
   @log.info "Connecting to reader via SDK..."
   
-  @log.info "Searching for reader with ESN of #{INGRESS_CARD_READER_ESN}..."
-  ingress_reader_id = find_device(INGRESS_CARD_READER_ESN)
+  @log.info "Searching for reader with ESN of #{INGRESS2_CARD_READER_ESN}..."
+  ingress_reader_id = find_device(INGRESS2_CARD_READER_ESN)
   
   if ingress_reader_id == nil
-    @log.error "Couldn't find reader with ESN of #{INGRESS_CARD_READER_ESN}!"
+    @log.error "Couldn't find reader with ESN of #{INGRESS2_CARD_READER_ESN}!"
     abort
   end
   
   @log.info "Reader ##{ingress_reader_id} has an ESN of #{INGRESS_CARD_READER_ESN}!"
   
-  set_active_device(ingress_reader_id)
-  @log.info "Connected to reader."
-end
-
-def initialise_and_connect_to_egress_reader
-
-  usb_only = set_device_type_to_usb
-  if usb_only == false
-    @log.error "Could not set PCProxLib device types to USB only!"
-    abort
-  end
-  
-  @log.info "Connecting to reader via SDK..."
-  
-  @log.info "Searching for reader with ESN of #{EGRESS_CARD_READER_ESN}..."
-  egress_reader_id = find_device(EGRESS_CARD_READER_ESN)
-  
-  if egress_reader_id == nil
-    @log.error "Couldn't find reader with ESN of #{EGRESS_CARD_READER_ESN}!"
-    abort
-  end
-  
-  @log.info "Reader ##{egress_reader_id} has an ESN of #{EGRESS_CARD_READER_ESN}!"
-  
-  set_active_device(egress_reader_id)
+  set_active_device(ingress2_reader_id)
   @log.info "Connected to reader."
 end
 
@@ -270,12 +246,8 @@ def access_granted(card, direction)
 
   if direction == "in"
     @log.debug "firing ingress relay..."
-    in_action = fork { exec("python3 /home/ubuntu/site-sentinel-box-usb-readers/solenoid_ingress.py") }
+    in_action = fork { exec("python3 /home/ubuntu/site-sentinel-box-usb-readers/solenoid_relay1.py") }
     Process.detach(in_action)
-  elsif direction == "out"
-    @log.debug "firing egress relay..."
-    out_action = fork { exec("python3 /home/ubuntu/site-sentinel-box-usb-readers/solenoid_egress.py") }
-    Process.detach(out_action)
    end
   access_allowed_beeps
 end
@@ -386,13 +358,6 @@ def verify_card_access(card, access_list, direction)
         log_access_denied(card, direction)
       end
     
-    elsif direction == "out"
-      # don't care if marked on site or not,
-      # they should be able to get out if their card is valid
-      access_granted(encrypted_card, direction)
-      log_access_granted(contractor["contractor_id"], card, direction)
-    end
-
   else # not in access list
     @log.debug "Card is not present in the access list."
     access_denied(encrypted_card)
@@ -401,6 +366,5 @@ def verify_card_access(card, access_list, direction)
 end
 
 def reader_online(reader, direction)
-  sleep 1.5 if direction == "egress" # so 'reader online' beeps happen separately, otherwise they happen at the same time
-  reader.BeepNow(2, false)
+   reader.BeepNow(2, false)
 end
