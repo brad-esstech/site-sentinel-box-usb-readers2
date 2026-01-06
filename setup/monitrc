@@ -30,18 +30,10 @@ set mailserver email-smtp.ap-southeast-2.amazonaws.com
   using tls with timeout 30 seconds
 set alert jb@sitesentinel.com.au # email address which will receive monit alerts
 #
-check process reader_ingress with pidfile /home/ubuntu/site-sentinel-box-usb-readers/pids/reader_ingress.pid
-  start program = "/usr/bin/sudo /usr/bin/systemctl start reader_ingress"
+check process reader_ingress with pidfile /home/ubuntu/site-sentinel-box-usb-readers/pids/reader_ingress2.pid
+  start program = "/usr/bin/sudo /usr/bin/systemctl start reader_ingress2"
     as uid "ubuntu" and gid "ubuntu"
-  stop program  = "/usr/bin/sudo /usr/bin/systemctl stop reader_ingress"
-    as uid "ubuntu" and gid "ubuntu"
-  if cpu > 80% for 2 cycles then restart
-  if totalmem > 200.0 MB for 2 cycles then restart
-#
-check process reader_egress with pidfile /home/ubuntu/site-sentinel-box-usb-readers/pids/reader_egress.pid
-  start program = "/usr/bin/sudo /usr/bin/systemctl start reader_egress"
-    as uid "ubuntu" and gid "ubuntu"
-  stop program  = "/usr/bin/sudo /usr/bin/systemctl stop reader_egress"
+  stop program  = "/usr/bin/sudo /usr/bin/systemctl stop reader_ingress2"
     as uid "ubuntu" and gid "ubuntu"
   if cpu > 80% for 2 cycles then restart
   if totalmem > 200.0 MB for 2 cycles then restart
